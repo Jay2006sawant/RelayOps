@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useInitiativesContext } from "@/components/InitiativesProvider";
-import { draftToInitiative } from "@/lib/planGenerator";
+import { buildInitiativeFromText, draftToInitiative } from "@/lib/planGenerator";
 import type { PlanDraft } from "@/lib/types";
 
 const SAMPLE =
@@ -21,25 +21,27 @@ export default function NewPlanPage() {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("/api/plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-      const data = (await res.json()) as { plan?: PlanDraft; error?: string };
-      if (!res.ok) {
-        setError(data.error ?? "Could not generate plan.");
-        return;
+      let initiative;
+      try {
+        const res = await fetch("/api/plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const data = (await res.json()) as { plan?: PlanDraft; error?: string };
+        if (res.ok && data.plan) {
+          initiative = draftToInitiative(text, data.plan);
+        }
+      } catch {
+        initiative = undefined;
       }
-      if (!data.plan) {
-        setError("Empty plan response.");
-        return;
+      if (!initiative) {
+        initiative = buildInitiativeFromText(text);
       }
-      const initiative = draftToInitiative(text, data.plan);
       add(initiative);
       router.push(`/app/${initiative.id}`);
     } catch {
-      setError("Network error. Try again.");
+      setError("Could not generate plan. Try again.");
     } finally {
       setLoading(false);
     }

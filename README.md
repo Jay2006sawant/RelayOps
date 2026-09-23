@@ -2,7 +2,7 @@
 
 Turn customer feedback and messy notes into structured execution plans for startup teams.
 
-**Live demo:** add your Vercel URL here after deploy.
+**Live demo:** [https://relayops.vercel.app](https://relayops.vercel.app)
 
 ## Features
 
