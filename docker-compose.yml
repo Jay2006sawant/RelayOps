@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: relayops
+      POSTGRES_PASSWORD: relayops
+      POSTGRES_DB: relayops
+    volumes:
+      - relayops_pg:/var/lib/postgresql/data
+
+volumes:
+  relayops_pg:
