@@ -21,6 +21,14 @@ type Insights = {
 };
 
 export function InsightsCharts({ data }: { data: Insights }) {
+  if (data.total === 0) {
+    return (
+      <div className="rounded-xl border border-dashed border-slate-700 bg-slate-900/30 p-6 text-center text-sm text-slate-400">
+        Run an analysis to populate charts and KPIs.
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">

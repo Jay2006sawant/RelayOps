@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "RelayOps | Feedback to execution plans",
+  title: "RelayOps Intelligence | AI customer ops",
   description:
-    "Turn customer feedback and messy notes into structured initiatives for startup teams.",
+    "LLM-powered feedback analysis, PostgreSQL persistence, and execution plans for startup teams.",
 };
 
 export default function RootLayout({
@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} min-h-screen bg-slate-50 font-sans antialiased`}>
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} min-h-screen bg-slate-950 font-sans antialiased text-slate-100`}>
         {children}
       </body>
     </html>
